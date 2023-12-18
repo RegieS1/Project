@@ -1,0 +1,51 @@
+<!-- frontend/templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Detection</title>
+    <style>
+        body{
+            background-image: url(https://img.freepik.com/free-vector/abstract-blue-circle-black-background-technology_1142-12714.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        h1 {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 2.1rem;
+            color: white;
+        }
+        .outer-cont{
+            width: 100%;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        img{
+            height: 400px;
+            width: auto;
+            display: block;
+    }
+    </style>
+</head>
+<body>
+    <div class="outer-cont">
+
+        <h1>HUMAN <span style="color: rgb(115, 187, 221);">DETECTION</span></h1>
+        
+        <form method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".jpg, .jpeg, .png" required>
+            <button type="submit">Upload and Process</button>
+        </form>
+        
+        {% if result %}
+            <h2>Processed Result:</h2>
+            <img src="{{ result['result'] }}" alt="inferred Image">
+        {% endif %}
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+version: '3' #the version of the Docker Compose file format.
+
+services: #service(container) for the application
+  frontend: #service 
+    build: #specifies the context and Dockerfile for building the frontend
+      context: ./frontend
+    ports:
+      - "5001:5001" #maps port 5001 on the host port 5001 on the container
+    depends_on: #specify that the frontend service depends on backen
+      - backend #service
+               
+  
+  backend: #service ,Defines the configuration for the backend service.
+
+    build: #specifies the context and Dockerfile for building the backend
+      context: ./backend #ang ato dockerfile sa pag build sa backend kay naka locate sa ./backend directory
+    ports:
+      - "5000:5000" #maps port 5000 on the host port 5000 on the container
