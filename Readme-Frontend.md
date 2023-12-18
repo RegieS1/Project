@@ -32,10 +32,10 @@ Open your web browser and go to http://localhost:5001
 - [requests](https://pypi.org/project/requests/)
 
 ----------------------------------------------------------------
-# Notes:
--You can upload image in the frontend, but return in error if you going to submit, for the reason that you can only access the GET request method which only retrieve the data.
+## Notes:
+- You can upload image in the frontend, but return in error if you going to submit, for the reason that you can only access the GET request method which only retrieve the data.
 
--Displaying the result of the uploaded image needs the /human_detection endpoint of backend to process the image and return to frontend to displayed. 
+- Displaying the result of the uploaded image needs the /human_detection endpoint of backend to process the image and return to frontend to displayed. 
 
 
 
