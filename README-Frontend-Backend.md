@@ -97,6 +97,6 @@ docker-compose up
 
 To stop the docker container:
 ```bash
-command: docker-compose down
+docker-compose down
 ```
 
