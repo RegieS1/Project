@@ -1,10 +1,10 @@
-#Human Detection Backend API Documentation
+Human Detection Backend API Documentation
 ------------------------------------------------------------------
 
 This backend API provides an endpoint for human detection in images using Histogram of Oriented Gradients (HOG).
 
 ------------------------------------------------------------------
-##CREATE A PROJECT STRUCTURE:
+CREATE A PROJECT STRUCTURE:
 
 Organize the folder and file
 Example:
@@ -17,7 +17,7 @@ Project/
 	       Dockerfile
 
 ------------------------------------------------------------------
-##API ENDPOINT:
+API ENDPOINT:
 
 This endpoint processes images for human detection.
 
@@ -25,14 +25,14 @@ Endpoint URL: '/human_detection'
 Method: POST
 
 -----------------------------------------------------------------
-##PAYLOAD FORMAT:
+PAYLOAD FORMAT:
 
 Method: POST
 Content-Type: multipart/formdata
 Parameter: 'file' (type: file) - Upload an image file (JPEG, PNG, or JPG).
 
 ----------------------------------------------------------------
-##RESPONSE:
+RESPONSE:
 
 - Success:
   - Status Code: 200
@@ -58,7 +58,7 @@ Parameter: 'file' (type: file) - Upload an image file (JPEG, PNG, or JPG).
     
 
 ----------------------------------------------------------------
-##HOW TO USE THE API:
+HOW TO USE THE API:
 
 run this command in the project directory
 
@@ -89,7 +89,5 @@ You can't access the endpoint of the backend directly for the reason
 that this is a POST method which is you need to upload the image and submit in the frontend.
 
 Ensure the uploaded image is in JPEG, PNG, or JPG format.
-
-Handle exceptions and errors gracefully in your code.
 
 The processed image URL is returned in base64 format for display in the frontend.
