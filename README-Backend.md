@@ -11,8 +11,11 @@ Example:
 
 Project/
 |-------frontend/
+               |
 |-------backend/
+	       |
 	       |--backend.py
+	       |
 	       |--Dockerfile
 
 ------------------------------------------------------------------
@@ -78,9 +81,9 @@ COPY the URL in your web browser  http://localhost:5001/ to send a POST request 
 DEPENDENCIES:
 
 - [Flask](https://pypi.org/project/Flask/)
--Flask-CORS
--Pillow
--OpenCV
+- [Flask-CORS](https://pypi.org/project/Flask-CORS/)
+- [Pillow](https://pypi.org/project/Pillow/)
+- [OpenCV](https://pypi.org/project/opencv-python/)
 
 Notes
 -----
