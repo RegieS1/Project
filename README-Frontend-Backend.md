@@ -55,7 +55,7 @@ This command starts the backend container, mapping port 5000 on your host to por
 
 
 ------------------------------------------------------------------
-## You can Build and Running both Frontend and Backend simultaneously 
+## You can Build and Run both Frontend and Backend simultaneously 
 
 #### CREATE A PROJECT STRUCTURE:
 
