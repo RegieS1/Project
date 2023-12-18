@@ -64,7 +64,6 @@ Example:
 
 ![image](https://github.com/RegieS1/Project/assets/146498517/3c922502-5c7d-4381-833c-acdfcb32d6f1)
 
---------------------------------------------------------
 
 #### Inside of docker-compose.yml file should look like this.
 
