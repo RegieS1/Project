@@ -9,14 +9,7 @@ CREATE A PROJECT STRUCTURE:
 Organize the folder and file
 Example:
 
-Project/
-|-------frontend/
-               |
-|-------backend/
-	       |
-	       |--backend.py
-	       |
-	       |--Dockerfile
+![image](https://github.com/RegieS1/Project/assets/146498517/eec62dd8-62a7-4b52-9aea-cee51ab4a8aa)
 
 ------------------------------------------------------------------
 API ENDPOINT:
