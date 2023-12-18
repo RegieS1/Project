@@ -1,5 +1,3 @@
-# README file explaining how to use your frontend, including any dependencies.
-----------------------------------------------------------------
 ## FRONTEND DOCUMENTATION
 
 This is the frontend application for human detection using Histogram of Oriented Gradients (HOG).
