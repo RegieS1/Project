@@ -23,10 +23,11 @@ Project/
 Build docker image:
 ```bash
 docker build -t frontend-image .
-
+```
 Run docker container:
 ```bash
 docker run -p 5001:5001 frontend-image .
+```
 
 Access the frontend:
 Open your web browser and go to http://localhost:5001
