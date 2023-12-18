@@ -10,11 +10,10 @@ Organize the folder and file
 Example:
 
 Project/
-	frontend/
-		.....
-	backend/
-	       backend.py
-	       Dockerfile
+|-------frontend/
+|-------backend/
+	       |--backend.py
+	       |--Dockerfile
 
 ------------------------------------------------------------------
 API ENDPOINT:
@@ -78,7 +77,7 @@ COPY the URL in your web browser  http://localhost:5001/ to send a POST request 
 ----------------------------------------------------------------
 DEPENDENCIES:
 
--Flask
+- [Flask](https://pypi.org/project/Flask/)
 -Flask-CORS
 -Pillow
 -OpenCV
