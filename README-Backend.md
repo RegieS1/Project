@@ -1,7 +1,7 @@
 Human Detection Backend API Documentation
 ------------------------------------------------------------------
 
-This backend API provides an endpoint for human detection in images using Histogram of Oriented Gradients (HOG).
+This backend API provides an endpoint for human detection in images.
 
 ------------------------------------------------------------------
 ## CREATE A PROJECT STRUCTURE:
