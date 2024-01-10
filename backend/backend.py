@@ -1,75 +1,86 @@
-# Import necessary libraries
+#import necessary libraries
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from io import BytesIO
-from PIL import Image
 import base64
 import cv2
 import numpy as np
+import imutils
+
+#Define paths for the MobileNetSSD model
+protopath = "models/MobileNetSSD_deploy.prototxt"
+modelpath = "models/MobileNetSSD_deploy.caffemodel"
+
+#Read the MobileNetSSD model from the specified paths
+net = cv2.dnn.readNetFromCaffe(prototxt=protopath, caffeModel=modelpath)
+
+#Define classes for detection (MobileNetSSD classes)
+CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat",
+           "bottle", "bus", "car", "cat", "chair", "cow", "diningtable",
+           "dog", "horse", "motorbike", "person", "pottedplant", "sheep",
+           "sofa", "train", "tvmonitor"]
 
 #Create a Flask app
 app = Flask(__name__)
-CORS(app) #Enable CORS for the entire Flask app
+CORS(app)
 
-#Define a route for processing images. This route handles POST requests.
-@app.route('/human_detection', methods=['POST']) 
+def detect_objects(image, net, classes):
 
-#This function handles requests to the /human_detection route.
-def human_detection(): 
-    """
-    Endpoint for human detection in images using Histogram of Oriented Gradients (HOG).
+    (H, W) = image.shape[:2]
+    blob = cv2.dnn.blobFromImage(image, 0.007843, (W, H), 127.5)
+    net.setInput(blob)
+    
+    detections = net.forward()
 
-    Payload:
-        - POST request with a file upload containing an image (JPEG, PNG, or JPG).
+    results = []
+    for i in np.arange(0, detections.shape[2]):
+        confidence = detections[0, 0, i, 2]
 
-    Returns:
-        - JSON response with the processed image URL in base64 format.
-        - If an error occurs during processing, returns a JSON response with an error message and status code 500.
-    """
+        if confidence > 0.5:
+            idx = int(detections[0, 0, i, 1])
 
-    try: 
-        #Retrieve the uploaded image from the request
+            if classes[idx] == "person":
+                #Scale the bounding box coordinates
+                box = detections[0, 0, i, 3:7] * np.array([W, H, W, H])
+                (startX, startY, endX, endY) = box.astype("int")
+
+                results.append({
+                    'confidence': float(confidence),
+                    'box': [int(startX), int(startY), int(endX), int(endY)]
+                })
+
+    return results
+
+@app.route('/human_detection', methods=['POST'])
+def human_detection():
+    try:
+        #Get the uploaded file from the request
         file = request.files['file']
 
-        #Check if a file was received in the request
         if file:
+            #Read and preprocess the image for detection
+            image = cv2.imdecode(np.frombuffer(file.read(), np.uint8), cv2.IMREAD_UNCHANGED)
+            image = imutils.resize(image, width=600)
 
-            #Open the image from the file and create an Image object
-            image =Image.open(BytesIO(file.read())) 
-            
-            #Convert the Image to a NumPy array
-            image_array =np.array(image)
+            #Perform object detection using the detect_objects function
+            results = detect_objects(image, net, CLASSES)
 
-            #Convert the image to grayscale
-            gray_image =cv2.cvtColor(image_array, cv2.COLOR_RGB2GRAY)
+            #Process detection results and return the response
+            if results:
 
-            #Create a HOG descriptor
-            hog =cv2.HOGDescriptor()
-            hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
-            
-            #Apply HOG for detection
-            boxes, weights =hog.detectMultiScale(gray_image, winStride=(8, 8), padding=(8, 8), scale=1.1)
+                #Draw bounding boxes on the image
+                for result in results:
+                    bounding_box = result['box']
+                    cv2.rectangle(image, (bounding_box[0], bounding_box[1]),
+                                  (bounding_box[2], bounding_box[3]), (0, 255, 0), 2)
 
-            #Draw rectangles around detected objects in the image
-            for (x, y, w, h) in boxes:
-                cv2.rectangle(image_array, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            
-            #Create a BytesIO object to store the annotated image in buffered variable.   
-            buffered =BytesIO()
-            
-            #Convert and save annotated image to buffer
-            Image.fromarray(image_array).save(buffered, format="JPEG") 
-            
-            #Convert the annotated image to base64 format for display in the frontend
-            image_str = base64.b64encode(buffered.getvalue()).decode('utf-8')
+                #Convert the processed image to base64 and return the result
+                _, buffer = cv2.imencode('.jpg', image)
+                image_str = base64.b64encode(buffer).decode('utf-8')
 
-            #Return a JSON response with the annotated image URL
-            return jsonify({'result': f'data:image/jpeg;base64,{image_str}'}) 
-        
-    # Handle exceptions and return an error response
+                return jsonify({'result': f'data:image/jpeg;base64,{image_str}'})
+
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-    
-# Run the Flask app
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
