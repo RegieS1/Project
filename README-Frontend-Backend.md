@@ -62,7 +62,7 @@ This command starts the backend container, mapping port 5000 on your host to por
 Organize the folder and file
 Example:
 
-![image](https://github.com/RegieS1/Project/assets/146498517/3c922502-5c7d-4381-833c-acdfcb32d6f1)
+![image](https://github.com/user-attachments/assets/7318ea3b-9be8-4e0b-942e-eb6bc8301b00)
 
 
 #### Inside of docker-compose.yml file should look like this.
